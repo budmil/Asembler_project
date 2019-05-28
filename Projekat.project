@@ -74,5 +74,6 @@
   <VirtualDirectory Name="src">
     <File Name="lex.l"/>
     <File Name="grammar.y"/>
+    <File Name="symbol_table.h"/>
   </VirtualDirectory>
 </CodeLite_Project>

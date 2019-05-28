@@ -44,7 +44,8 @@
      DOT = 262,
      SEK = 263,
      END = 264,
-     ENDE = 265
+     ENDE = 265,
+     COMA = 266
    };
 #endif
 
@@ -55,7 +56,7 @@ typedef union YYSTYPE
 {
 
 /* Line 2068 of yacc.c  */
-#line 16 "grammar.y"
+#line 17 "grammar.y"
 
 	  char name[20];
 	  char registar[20];
@@ -64,7 +65,7 @@ typedef union YYSTYPE
 
 
 /* Line 2068 of yacc.c  */
-#line 68 "grammar.tab.h"
+#line 69 "grammar.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

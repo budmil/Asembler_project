@@ -4,6 +4,7 @@
 void showError();
 
 %}
+kraj (".end")
 labele ([a-zA-Z][0-9a-zA-Z]+)
 sekcije ("data"|"text"|"bss")
 registri   ("r"[0-7]|"sp"|"pc")
@@ -18,9 +19,10 @@ mneumonici       ("mov"|"equ"|"add"|"sub")
 {white_space} { return (WS);}
 {newline} { return (NL); }
 "." {return (DOT);}
+"," {return (COMA);}
 {sekcije} { sscanf(yytext, "%s", yylval.sekcija); return (SEK); }
-".end" { return (END); }
-"EOF" { return (ENDE); }
+{kraj} { return (END); }
+<<EOF>> {return (ENDE); }
 %%
 
 

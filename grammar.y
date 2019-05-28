@@ -1,13 +1,14 @@
 %{
 #include <stdio.h>
+#include "symbol_table.h"
 
 int yylex();
 int yyerror(char *s);
 int yyin;
-
 %}
 
-%token MNE REGISTAR WS NL DOT SEK END ENDE
+%token MNE REGISTAR WS NL DOT SEK END ENDE COMA
+
 
 %type <name> MNE
 %type <registar> REGISTAR
@@ -28,7 +29,7 @@ rows kraj
 ;
 
 kraj:
-ENDE|END {
+END | ENDE {
 	YYACCEPT;
 }
 
@@ -45,8 +46,10 @@ space DOT space SEK space NL {
 }
 
 operation:
-space MNE space REGISTAR space REGISTAR space NL {
-	printf("Mneumonik: %s, Registar: %s\n", $2, $4);
+space MNE space REGISTAR space COMA space REGISTAR space NL {
+	printf("Mneumonik: %s, Registar1: %s, Registar2:%s\n", $2, $4,$8);
+	rednibroj++;
+	putsym($2);
 }
 
 space:
@@ -66,7 +69,14 @@ int yyerror(char *s)
 
 int main()
 {
+	rednibroj=0;
 	yyin=fopen("myfile.txt", "r");
+	
+	yyparse();
+	fclose(yyin);
+	yyin=fopen("myfile.txt", "r");
+	
+	
 	yyparse();
     return 0;
 }
