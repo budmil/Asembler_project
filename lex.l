@@ -1,24 +1,30 @@
 %{
-
 #include <stdio.h>
-#include <string.h>
 #include "grammar.tab.h"
 void showError();
-%}
 
-registri   ("r"[0-9])
+%}
+labele ([a-zA-Z][0-9a-zA-Z]+)
+sekcije ("data"|"text"|"bss")
+registri   ("r"[0-7]|"sp"|"pc")
 white_space (" ")
-mneumonici       ("mov"|"equ")
+newline ([\n])
+mneumonici       ("mov"|"equ"|"add"|"sub")
 
 %%
 
 {mneumonici}			   {sscanf(yytext, "%s", yylval.name); return (MNE);}
-{registri}      {sscanf(yytext, "%s", yylval.name1); return (REGISTAR);}
+{registri}      {sscanf(yytext, "%s", yylval.registar); return (REGISTAR);}
 {white_space} { return (WS);}
-
+{newline} { return (NL); }
+"." {return (DOT);}
+{sekcije} { sscanf(yytext, "%s", yylval.sekcija); return (SEK); }
+".end" { return (END); }
+"EOF" { return (ENDE); }
 %%
 
 
 void showError(){
     printf("Other input");
 }
+

@@ -72,7 +72,6 @@
     </Configuration>
   </Settings>
   <VirtualDirectory Name="src">
-    <File Name="main.c"/>
     <File Name="lex.l"/>
     <File Name="grammar.y"/>
   </VirtualDirectory>
