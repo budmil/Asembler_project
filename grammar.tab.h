@@ -37,7 +37,7 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     MNE = 258,
+     OPR = 258,
      REGISTAR = 259,
      WS = 260,
      NL = 261,
@@ -45,7 +45,9 @@
      SEK = 263,
      END = 264,
      ENDE = 265,
-     COMA = 266
+     COMA = 266,
+     DOSEG = 267,
+     LAB = 268
    };
 #endif
 
@@ -56,11 +58,9 @@ typedef union YYSTYPE
 {
 
 /* Line 2068 of yacc.c  */
-#line 17 "grammar.y"
+#line 19 "grammar.y"
 
-	  char name[20];
-	  char registar[20];
-	  char sekcija[20];
+	  char name[10];
 
 
 

@@ -4,20 +4,20 @@
 
 int yylex();
 int yyerror(char *s);
-int yyin;
+char scope;
 %}
 
-%token MNE REGISTAR WS NL DOT SEK END ENDE COMA
+%token OPR REGISTAR WS NL DOT SEK END ENDE COMA DOSEG LAB
 
 
-%type <name> MNE
-%type <registar> REGISTAR
-%type <sekcija> SEK
+%type <name> OPR
+%type <name> REGISTAR
+%type <name> SEK
+%type <name> DOSEG
+%type <name> LAB
 
 %union{
-	  char name[20];
-	  char registar[20];
-	  char sekcija[20];
+	  char name[10];
 }
 
 
@@ -38,18 +38,31 @@ rows:
 |row rows
 
 row:
-directive | operation
+section | operation | scope
 
-directive:
+scope:
+space DOT DOSEG space LAB scope1 NL{
+	scope = $3; 
+	printf("doseg: %s %s\n", $3, $5);
+	putsym($5, scope);
+}
+
+scope1: 
+|space COMA space LAB scope1 {
+	printf(" %s ",$4);
+	putsym($4, scope);
+}
+
+section:
 space DOT space SEK space NL {
 	printf("sekcija: %s\n", $4);
+	putsym($4,'l');
 }
 
 operation:
-space MNE space REGISTAR space COMA space REGISTAR space NL {
+space OPR space REGISTAR space COMA space REGISTAR space NL {
 	printf("Mneumonik: %s, Registar1: %s, Registar2:%s\n", $2, $4,$8);
 	rednibroj++;
-	putsym($2);
 }
 
 space:
@@ -60,24 +73,29 @@ space:
 %%
 
 
-
 int yyerror(char *s)
 {
 	printf("Syntax Error on line %s\n", s);
 	return 0;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
 	rednibroj=0;
-	yyin=fopen("myfile.txt", "r");
-	
+	FILE *fp; //fileprint
+	extern FILE *yyin;
+	if (strcmp(argv[1],"-o")) {
+		printf ("Bad input: %s\nTry following pattern: -o output.txt input.txt\n",argv[1]);
+		return 1;
+	}
+	yyin=fopen(argv[3], "r");	
 	yyparse();
+	fp=fopen(argv[2], "w");
+	printf("First parse complete.\n");
+	ispisi(fp);
+	
+	fclose(fp);
 	fclose(yyin);
-	yyin=fopen("myfile.txt", "r");
-	
-	
-	yyparse();
     return 0;
 }
 
