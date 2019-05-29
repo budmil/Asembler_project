@@ -9,6 +9,7 @@ kraj (".end")
 labele ([a-zA-Z][0-9a-zA-Z]*)
 sekcije ("data"|"text"|"bss")
 registri   ("r"[0-7]|"sp"|"pc")
+regind ({registri}"["[0-9]+"]")
 white_space (" ")
 newline ([\n])
 operacija       ("mov"|"equ"|"add"|"sub")
@@ -24,6 +25,7 @@ operacija       ("mov"|"equ"|"add"|"sub")
 {sekcije} { sscanf(yytext, "%s", yylval.name); return (SEK); }
 {doseg} { sscanf(yytext, "%s", yylval.name); return (DOSEG);}
 {labele} { sscanf(yytext,"%s",yylval.name); return (LAB);}
+{regind} { sscanf(yytext, "%s",yylval.name); return (REGIND); }
 {kraj} { return (END); }
 <<EOF>> {return (ENDE); }
 %%

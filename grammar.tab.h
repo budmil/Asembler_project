@@ -47,7 +47,8 @@
      ENDE = 265,
      COMA = 266,
      DOSEG = 267,
-     LAB = 268
+     LAB = 268,
+     REGIND = 269
    };
 #endif
 
@@ -58,14 +59,14 @@ typedef union YYSTYPE
 {
 
 /* Line 2068 of yacc.c  */
-#line 19 "grammar.y"
+#line 21 "grammar.y"
 
 	  char name[10];
 
 
 
 /* Line 2068 of yacc.c  */
-#line 69 "grammar.tab.h"
+#line 70 "grammar.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
